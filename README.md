@@ -1,32 +1,12 @@
-#AngularJS学习笔记
+#学习笔记
 
-##感受
-业务代码写的很快，涉及到与现有公共组件对接时比较痛苦（上传组件、存储组件、校验框架）
-
-##优点
-* 数据驱动
-* **双向数据绑定**    
-	实现业务逻辑仅需操作模型，视图层自动展现；视图层的操作可以快速体现到模型中。
-
-* **filter**   
-	格式化用于展现到界面上的数据，Angular自带日期、数字、币种、JSON、大小写等格式转化方法，甚至祭出大招`orderBy`，从此table数据的排序不需要JS代码即可实现；Angular允许自定义过滤器。
-
-	```
-	{{account | currency:"USD"}}
-	8888 >>> USD 8,888.00
-	```
-
-* 几乎不需要在业务逻辑中写DOM操作的代码
-
-* JS代码简洁
-
+* 选择菜单select使用`ngOptions`后，选中的值将不是option属性`value`的值，而是`ng-options`中赋予的对象。下例中选中的是`payee`对象：
 	
-##缺点
-* 学习成本略高
-* API文档有点乱
-
-##学习笔记
-* 使用`ngOptions`后的select，当选中一项时，值不是`value="x"`中的x，而是整个被选中的对象。
+	```
+	<select ng-model="formData.payee" ng-options="payee.payeeName for payee in payees" class="ui-dropdown ui-dropdown-system">
+    	<option value="">请选择</option>
+   </select>
+   ```
 
 * Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。
 
@@ -127,7 +107,7 @@
     * Stacking Directives
 
 * **service**
-	* 延迟初始化 - 当service被一个组件调用时，Angular初始化它。
+	* 延迟初始化 - 当service被一个组件调用时，Angular才会初始化它。
 	* Service是一些单例对象或function，用来完成一些通用功能
 	* 内置Service都以$符号开头，自定义Service最好避开$符号。
 
@@ -152,6 +132,44 @@
 		myMod.value("greeting", ...);
 		```
 		以上三种定义方式与繁琐的`app.config(...)`定义方式做了相同的事。
+
+* **$injector**
+	* injector负责创建service实例，当我们创建一个带有注入参数的function时，injector就开始忙碌工作了。
+	* 每一个AngularJS应用仅有一个`$injector`，在应用启动时就创建好了。
+	* 我们也可以使用`$injector`，仅需注入到任何可依赖注入的组件（是的，`$injector`知道如何注入它自己）。
+	* 我们可以通过`$injector`得到任何定义过的service实例。
+			
+		```
+		var greeting = $injector.get('greeting');
+		greeting('Ford Prefect');
+		```
+	* injector仅为每个service创建一个实例，然后它把provider/service返回的任何东西缓存起了，下次请求时直接返回缓存中的对象。
+	* service可以注入到`controller` `directive` `filter` `factory`定义的方法中。
+
+##感受
+业务代码写的很快，涉及到与现有公共组件对接时比较痛苦（上传组件、存储组件、校验框架）
+
+##优点
+* 数据驱动
+* **双向数据绑定**    
+	实现业务逻辑仅需操作模型，视图层自动展现；视图层的操作可以快速体现到模型中。
+
+* **filter**   
+	格式化用于展现到界面上的数据，Angular自带日期、数字、币种、JSON、大小写等格式转化方法，甚至祭出大招`orderBy`，从此table数据的排序不需要JS代码即可实现；Angular允许自定义过滤器。
+
+	```
+	{{account | currency:"USD"}}
+	8888 >>> USD 8,888.00
+	```
+
+* 几乎不需要在业务逻辑中写DOM操作的代码
+
+* JS代码简洁
+
+	
+##缺点
+* 学习成本略高
+* API文档有点乱
 
 ##实践中遇到的问题
 * 上传组件从服务器端返回的值会自动赋予input，然后调用trigger事件告知天下，但是！Angular的`ng-change`并没有收到这个信息，不得不在此绑定jQuery change事件监听。

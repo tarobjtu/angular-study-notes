@@ -1,5 +1,13 @@
 #AngularJS学习笔记
 
+使用AngularJS开发应用牢记一句话：**莫用jQuery思维写Angular代码** 
+
+* **think in AngularJS**
+
+* Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。
+
+* `controller`中最好不要写DOM操作的代码；`expression`中不能写逻辑代码。
+
 * 选择菜单select使用`ngOptions`后，选中的值将不是option属性`value`的值，而是`ng-options`中赋予的对象。下例中选中的是`payee`对象：
 	
 	```
@@ -7,10 +15,6 @@
     	<option value="">请选择</option>
    </select>
    ```
-
-* Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。
-
-* `controller`中最好不要写DOM操作的代码；`expression`中不能写逻辑代码。
 
 * **scope继承**    
 	* `ng-repeat`, `ng-include`, `ng-switch`, `ng-view`, `ng-controller`设置`scope: true`与`transclude: true`后会基于原型继承创建新`$scope`。
@@ -155,13 +159,18 @@
 * **Configuring Providers**
 	*  
 
+##最佳实践
+
+
 ##感受
 业务代码写的很快，涉及到与现有公共组件对接时比较痛苦（上传组件、存储组件、校验框架）
 
 ##优点
-* 数据驱动
 * **双向数据绑定**    
 	实现业务逻辑仅需操作模型，视图层自动展现；视图层的操作可以快速体现到模型中。
+
+* **清晰的模型（Model）层**   
+	在jQuery里，DOM在一定程度上扮演了模型的角色。但在AngularJS中，我们有一个独立的模型层可以灵活的管理。完全与视图独立。这有助于上述的数据绑定，维护了关注点的分离（独立的考虑视图和模型），并且引入了更好的可测性。后面还会提到这点。
 
 * **filter**   
 	格式化用于展现到界面上的数据，Angular自带日期、数字、币种、JSON、大小写等格式转化方法，甚至祭出大招`orderBy`，从此table数据的排序不需要JS代码即可实现；Angular允许自定义过滤器。
@@ -188,8 +197,10 @@
 * 读一两个好的Angular项目源码
 
 ##学习站点
-* [官网](https://angularjs.org/)
+* [AngularJS官网](https://angularjs.org/)
 * [入门视频教程](http://campus.codeschool.com/courses/shaping-up-with-angular-js/intro)
-* [Angular作者博客](http://www.yearofmoo.com/)
+* [jQuery开发者如何建立起AngularJS的思维模式](http://goo.gl/HV1Och)
+* [AngularJS作者博客](http://www.yearofmoo.com/)
+* [AngularJS模块集锦](http://ngmodules.org/)
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
-* [AngularJS and scope.$apply](http://jimhoskins.com/2012/12/17/angularjs-and-apply.html)
+* 

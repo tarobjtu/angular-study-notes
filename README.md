@@ -1,4 +1,4 @@
-#学习笔记
+#AngularJS学习笔记
 
 * 选择菜单select使用`ngOptions`后，选中的值将不是option属性`value`的值，而是`ng-options`中赋予的对象。下例中选中的是`payee`对象：
 	
@@ -22,9 +22,15 @@
 	
 * **scope - $apply and $digest**
 	* `$scope.$digest()`判断绑定的值是否发生变化，在使用`$scope.$apply()`时会自动调用`$scope.$digest()`。
-
 	* `$scope.$apply()`更新视图或watcher，我们写的大部分Angular代码都会自动调用$apply，即使像ng-click controller的初始化，$http的回调函数。
+
+* **何时使用$scope.$apply()**
 	* 我们写了一段代码，未使用Angular框架的方法，又想把模型的变更体现到视图上，这时就需要手动调用`$scope.$apply()`。
+	* AngularJS封装了一些常用的JS异步方法，仅是在传统异步方法执行完成后调用了`$scope.$apply()`而已，例如：
+		* Events => `ng-click`
+		* Timeouts => `$timeout`
+		* jQuery.ajax() => `$http`      
+	
 
 
 * **如何更新视图 - How do we update bindings**
@@ -145,6 +151,9 @@
 		```
 	* injector仅为每个service创建一个实例，然后它把provider/service返回的任何东西缓存起了，下次请求时直接返回缓存中的对象。
 	* service可以注入到`controller` `directive` `filter` `factory`定义的方法中。
+
+* **Configuring Providers**
+	*  
 
 ##感受
 业务代码写的很快，涉及到与现有公共组件对接时比较痛苦（上传组件、存储组件、校验框架）

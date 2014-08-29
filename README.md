@@ -15,6 +15,9 @@
     	<option value="">请选择</option>
    </select>
    ```
+* **templateUrl**
+	* 自定义directive 或 $routeProvider.when()中都有templateUrl的配置项
+	* templateUrl路径是基于当前HTML文件的位置，而非JS。
 
 * **scope继承**    
 	* `ng-repeat`, `ng-include`, `ng-switch`, `ng-view`, `ng-controller`设置`scope: true`与`transclude: true`后会基于原型继承创建新`$scope`。
@@ -71,6 +74,12 @@
 		```
 		
 	* `PreLinkingFunction`方法父元素先执行然后子元素，`PostLinkingFunction()`正好相反。见[DEMO](http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview)
+	
+* **directive replace**
+	* **DEPRECATED** 这个属性将在Angular2.0中被移除
+	* `replace: true` 模板会覆盖directive元素本身
+	* `replace: false` 模板会覆盖directive元素的内容。
+	* replace的默认属性值为false
 
 * **jqLite 与 jQuery**
 	* jqLite是一个小型、API兼容的jQuery子集。
@@ -161,8 +170,38 @@
 	* injector仅为每个service创建一个实例，然后它把provider/service返回的任何东西缓存起了，下次请求时直接返回缓存中的对象。
 	* service可以注入到`controller` `directive` `filter` `factory`定义的方法中。
 
-* **Configuring Providers**
-	*  
+* **$resource**
+	* $resource是一个工厂方法，创建与服务器端RESTful数据源交互的资源对象。
+
+* **$routeProvider**
+	* 见API文档[$routeProvider](https://docs.angularjs.org/api/ngRoute/provider/$routeProvider)
+	
+	```
+	$routeProvider.when('/dashboard', {
+    templateUrl:'dashboard/dashboard.tpl.html',
+    controller:'DashboardCtrl',
+    resolve:{
+      projects:['Projects', function (Projects) {
+        //TODO: need to know the current user here
+        return Projects.all();
+      }],
+      tasks:['Tasks', function (Tasks) {
+        //TODO: need to know the current user here
+        return Tasks.all();
+      }]
+    }
+  });
+  ```
+  
+  * `resolve` 声明的依赖会被注入到controller中。如果这些依赖项是`promise`，router会在`controller`实例化之前等待依赖项全部`resolved`或任意一个`rejected`。如果`promises`全部成功`resolved`，这些`promises`的值会被注入`controller`，同时`$routeChangeSuccess`事件被触发。如果任意一个`promises`被`rejected`，`$routeChangeError`事件被触发。
+  
+* **$routeChangeError**
+	* [resolve $routeChangeError](http://www.thinkster.io/angularjs/o1YnQ52SOd/angularjs-resolve-routechangeerror)
+	
+* **ng-view**
+	* ngView是补充$route服务的directive，当前route配置的模板会最终呈现到ngView中。current route发生变化时，ngView的视图内容会根据$route服务的配置而变化。
+	* ngRiew依赖于ngRoute模块
+
 
 ##最佳实践
 * 如果一个 directive像一个“widget”并且有一个模版，那么它也要做到关注点分离。也就是说，模版本身也应该很大程度上与其link和 controller实现保持独立。

@@ -1,20 +1,32 @@
 #AngularJS学习笔记
 
-使用AngularJS开发应用牢记一句话：**莫用jQuery思维写Angular代码** 
+* **think in AngularJS**   
+	* 使用AngularJS开发应用牢记一句话：**莫用jQuery思维写Angular代码** 
+	
+* **angular.bootstrap**
+	* 手动初始化AngularJS
+	
+		```
+		angular.bootstrap(document, ['my-app']);
+		```
+* **AngularJS使用Seajs做加载工具**
+	* AngularJS包装成CMD模块
+	* `angular`是全局变量，定义`services` `controller` `directive`时仅需依赖angular.js文件即可
+	* `template.tpl.html`文件可通过seajs的require机制引入，注入到template属性中
 
-* **think in AngularJS**
-
-* Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。
+* **$parse**
+	* Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。
 
 * `controller`中最好不要写DOM操作的代码；`expression`中不能写逻辑代码。
 
-* 选择菜单select使用`ngOptions`后，选中的值将不是option属性`value`的值，而是`ng-options`中赋予的对象。下例中选中的是`payee`对象：
+* **ngOptions** 
+	* 选择菜单select使用`ngOptions`后，选中的值将不是option属性`value`的值，而是`ng-options`中赋予的对象。下例中选中的是`payee`对象：
 	
-	```
-	<select ng-model="formData.payee" ng-options="payee.payeeName for payee in payees" class="ui-dropdown ui-dropdown-system">
-    	<option value="">请选择</option>
-   </select>
-   ```
+		```
+		<select ng-model="formData.payee" ng-options="payee.payeeName for payee in payees" class="ui-dropdown ui-dropdown-system">
+    		<option value="">请选择</option>
+   		</select>
+   		```
 * **templateUrl**
 	* 自定义directive 或 $routeProvider.when()中都有templateUrl的配置项
 	* templateUrl路径是基于当前HTML文件的位置，而非JS。
@@ -81,25 +93,20 @@
 	* `replace: false` 模板会覆盖directive元素的内容。
 	* replace的默认属性值为false
 
-* **jqLite 与 jQuery**
-	* jqLite是一个小型、API兼容的jQuery子集。
+* **directive require**
+	* 邀请(require)另一个directive、并注入controller到当前directive的link方法里，作为第四个参数。
+	* `无前缀` - 在当前directive中使用被注入的controller，如果不存在抛出异常。
+	* `?` - 被注入的controller不存在时，传null到link方法中。
+	* `^` - 被注入的controller来自被邀请的directive或者它的父辈，如果不存在抛出异常。
+	* `?^` - 被注入的controller来自被邀请的directive或者它的父辈，如果不存在，传null到link方法中。
 	
-	* 如果jQuery可用，`angular.element`就是jQuery对象本身。如果jQuery不可用，`angular.element`是jqLite对象。
+* **directive restrict**
+	* 限制directive为特定类型的directive，如果未指定，默认为Element或Attribute。
+	* `E` - Element(默认) `<my-directive></my-directive>`
+	* `A` - Attribute(默认) `<div my-directive="exp"></div>`
+	* `C` - Class: `<div class="my-directive: exp;"></div>`
+	* `M` - Comment: `<!-- directive: my-directive exp -->`
 	
-	* jQuery的引用必须在Angular之前，Angular才能自动从jqLite模式切到jQuery模式。   
-		
-		```
-		<!-- Add jQuery -->
-		<script type="text/javascript" src="jquery.js"></script>
-
-		<!-- Then, add angular -->
-		<script type="text/javascript" src="angularjs.js"></script>
-		```
-* **$element === angular.element() === jQuery() === $()**
-
-* **$attributes.$observe()**
-	* 在link中监听属性值的变化
-
 * **引入第三方Directive**
 	* Global Configurations
 	* Require Directives
@@ -129,6 +136,34 @@
         ```
     
     * Stacking Directives
+
+* **parse**
+	* Angular表达式转变成function
+
+* **form**
+	* 如果form的`name`属性被赋值，form controller就会在这个name下发布到当前scope
+
+* **form $setPristine()**
+	* reset Form
+
+* **jqLite 与 jQuery**
+	* jqLite是一个小型、API兼容的jQuery子集。
+	
+	* 如果jQuery可用，`angular.element`就是jQuery对象本身。如果jQuery不可用，`angular.element`是jqLite对象。
+	
+	* jQuery的引用必须在Angular之前，Angular才能自动从jqLite模式切到jQuery模式。   
+		
+		```
+		<!-- Add jQuery -->
+		<script type="text/javascript" src="jquery.js"></script>
+
+		<!-- Then, add angular -->
+		<script type="text/javascript" src="angularjs.js"></script>
+		```
+* **$element === angular.element() === jQuery() === $()**
+
+* **$attributes.$observe()**
+	* 在link中监听属性值的变化
 
 * **service**
 	* 延迟初始化 - 当service被一个组件调用时，Angular才会初始化它。
@@ -258,4 +293,4 @@
 * [AngularJS作者博客](http://www.yearofmoo.com/)
 * [AngularJS模块集锦](http://ngmodules.org/)
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
-* 
+* [AngularJS + RequireJS](https://www.startersquad.com/blog/angularjs-requirejs/)

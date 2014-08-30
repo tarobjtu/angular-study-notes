@@ -9,10 +9,40 @@
 		```
 		angular.bootstrap(document, ['my-app']);
 		```
-* **AngularJS使用Seajs做加载工具**
+* **使用Seajs做AngularJS的加载工具**
+	* Angular modules solve the problem of removing global state from the application and provide a way of configuring the injector. As opposed to AMD or require.js modules, Angular modules don't try to solve the problem of script load ordering or lazy script fetching. These goals are totally independent and both module systems can live side by side and fulfill their goals.
 	* AngularJS包装成CMD模块
 	* `angular`是全局变量，定义`services` `controller` `directive`时仅需依赖angular.js文件即可
 	* `template.tpl.html`文件可通过seajs的require机制引入，注入到template属性中
+
+* **SeaJS vs RequireJS**
+	* Seajs与RequireJS都是并行加载模块，但执行模块的机制不同，Seajs是依赖模块的懒执行（按需执行），RequireJS是依赖模块的预执行（尽早执行）
+	* 性能上RequireJS比Seajs好。
+
+* **Standard AMD define**
+	
+	```
+	define(['foo', 'foo/bar'], function(foo, bar){
+    	return {
+        	doSomething : function(){
+            	console.log(foo + bar);
+        	}
+    	};
+	});
+	```
+
+* **Simplified CommonJS wrapper**
+	
+	```
+	define(function(require, exports, module){
+    	var foo = require('foo'),
+       		bar = require('foo/bar');
+
+    	exports.doSomething = function(){
+        	console.log(foo + bar);
+    	};
+	});
+	```
 
 * **$parse**
 	* Angular没有使用JavaScript的`eval()`解析expression，而是自己实现了`$parse`服务。Angular表达式中不能使用`window` `document` `location`这样的全局变量，取而代之的是`$window` `$location`这样的服务。

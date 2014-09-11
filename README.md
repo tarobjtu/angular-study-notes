@@ -57,9 +57,10 @@
     		<option value="">请选择</option>
    		</select>
    		```
-* **templateUrl**
-	* 自定义directive 或 $routeProvider.when()中都有templateUrl的配置项
-	* templateUrl路径是基于当前HTML文件的位置，而非JS。
+* **controller - $scope vs this**
+	* this定义控制器实例的属性或方法，无法在HTML的directive或expression中被调用
+	* 
+	* 解释详见：[this vs $scope in AngularJS controllers](http://stackoverflow.com/questions/11605917/this-vs-scope-in-angularjs-controllers)
 
 * **scope继承**    
 	* `ng-repeat`, `ng-include`, `ng-switch`, `ng-view`, `ng-controller`设置`scope: true`与`transclude: true`后会基于原型继承创建新`$scope`。
@@ -116,6 +117,10 @@
 		```
 		
 	* `PreLinkingFunction`方法父元素先执行然后子元素，`PostLinkingFunction()`正好相反。见[DEMO](http://plnkr.co/edit/qrDMJBlnwdNlfBqEEXL2?p=preview)
+
+* **templateUrl**
+	* 自定义directive 或 $routeProvider.when()中都有templateUrl的配置项
+	* templateUrl路径是基于当前HTML文件的位置，而非JS。
 	
 * **directive replace**
 	* **DEPRECATED** 这个属性将在Angular2.0中被移除

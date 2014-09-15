@@ -1,5 +1,25 @@
 #AngularJS使用心得
 
+##学习资料
+###视频
+* [入门视频教程](http://campus.codeschool.com/courses/shaping-up-with-angular-js/intro)
+
+###书籍
+* [AngularJS权威教程](http://www.ituring.com.cn/book/1438)
+
+###博文
+* [jQuery开发者如何建立起AngularJS的思维模式](http://goo.gl/HV1Och)
+* [AngularJS + RequireJS](https://www.startersquad.com/blog/angularjs-requirejs/)
+* [Angular作者博客](http://www.yearofmoo.com/)
+
+###第三方库
+* [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
+* [bindonce](https://github.com/Pasvaz/bindonce)
+* [ui-router](https://github.com/angular-ui/ui-router)
+* ...
+* [AngularJS模块集锦](http://ngmodules.org/)
+
+
 ##学习笔记
 * 使用`ngOptions`后的select，当选中一项时，值不是`value="x"`中的x，而是整个被选中的对象。
 
@@ -194,9 +214,3 @@ console.log('$$watchers共计：', watchersCount)
 		})		
 		```
 
-##学习站点
-* [官网](https://angularjs.org/)
-* [入门视频教程](http://campus.codeschool.com/courses/shaping-up-with-angular-js/intro)
-* [Angular作者博客](http://www.yearofmoo.com/)
-* [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
-* [AngularJS and scope.$apply](http://jimhoskins.com/2012/12/17/angularjs-and-apply.html)

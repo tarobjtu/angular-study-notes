@@ -19,6 +19,9 @@
 * ...
 * [AngularJS模块集锦](http://ngmodules.org/)
 
+###开发辅助工具
+* Chrome调试插件 [AngularJS Batarang](https://chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en)
+* 混淆Angular代码前必备：ngMin（推断式注入声明自动转为显式注入声明）
 
 ##学习笔记
 * 使用`ngOptions`后的select，当选中一项时，值不是`value="x"`中的x，而是整个被选中的对象。

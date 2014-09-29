@@ -15,7 +15,8 @@
 ###第三方库
 * [UI Bootstrap](http://angular-ui.github.io/bootstrap/)
 * [bindonce](https://github.com/Pasvaz/bindonce)
-* [ui-router](https://github.com/angular-ui/ui-router)
+* [ui-router](https://github.com/angular-ui/ui-router) - 增强版的`ngRouter`
+* [Restangular](https://github.com/mgonto/restangular) - 增强版的`$resource`服务
 * ...
 * [AngularJS模块集锦](http://ngmodules.org/)
 
@@ -170,11 +171,12 @@ z
 	* injector仅为每个service创建一个实例，然后它把provider/service返回的任何东西缓存起了，下次请求时直接返回缓存中的对象。
 	* service可以注入到`controller` `directive` `filter` `factory`定义的方法中。
 
-###form（）
+###form
 ```
 <form name>.<angular property>
 <form name>.<input name>.<angular property>
 ```
+
 * 异步校验 通过 自定义指令`directive` 实现
 
 ####嵌套表单
